@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pending Vaccinations</title>
+  <!-- Bootstrap CSS link -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Add custom styles for the pending-vaccines page if needed */
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    .container {
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    /* Additional custom styles for the table */
+    .table thead th {
+      font-weight: bold;
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .table tbody tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    .table td {
+      vertical-align: middle;
+    }
+
+    /* Custom style for success message */
+    .alert-success {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Children's Vaccination</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="your-info.html">Your Info</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="your-vaccinations.html">Your Vaccinations</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pending-vaccines.html">Pending Vaccines</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content here -->
+  <div class="container mt-5">
+    <h1 class="mb-4">Pending Vaccinations</h1>
+    <!-- Table to display pending vaccinations -->
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Vaccine Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="pendingVaccinesTable">
+          <!-- Add pending vaccinations dynamically using JavaScript -->
+          <tr>
+            <td>COVID-19 Vaccine</td>
+            <td>2023-07-30</td>
+            <td>Pending</td>
+            <td>
+              <button type="button" class="btn btn-danger btn-sm" onclick="removePendingVaccine(this)">Remove</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Flu Vaccine</td>
+            <td>2023-08-10</td>
+            <td>Pending</td>
+            <td>
+              <button type="button" class="btn btn-danger btn-sm" onclick="removePendingVaccine(this)">Remove</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Tetanus Vaccine</td>
+            <td>2023-08-15</td>
+            <td>Pending</td>
+            <td>
+              <button type="button" class="btn btn-danger btn-sm" onclick="removePendingVaccine(this)">Remove</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p id="noPendingVaccinesMessage">No pending vaccines at the moment.</p>
+    <h2>Upload/Download Certificate</h2>
+    <div class="custom-file">
+      <input type="file" class="custom-file-input" id="uploadCertificate">
+      <label class="custom-file-label" for="uploadCertificate">Choose file</label>
+    </div>
+    <button class="btn btn-primary mt-3" id="uploadButton">Upload</button>
+    <a href="#" class="btn btn-success mt-3" id="downloadButton" disabled>Download</a>
+
+    <!-- Success message for file upload -->
+    <div class="alert alert-success" id="uploadSuccessMessage" style="display: none;">
+      File uploaded successfully!
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer mt-4">
+    <div class="container text-center">
+      <p>&copy; 2023 Children's Vaccination Website. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    // Function to add a pending vaccination to the table
+    function addPendingVaccine(name, date, status) {
+      var newRow = $("<tr>");
+      newRow.append($("<td>").text(name));
+      newRow.append($("<td>").text(date));
+      newRow.append($("<td>").text(status));
+      newRow.append($("<td>").html('<button type="button" class="btn btn-danger btn-sm" onclick="removePendingVaccine(this)">Remove</button>'));
+      $("#pendingVaccinesTable").append(newRow);
+      $("#noPendingVaccinesMessage").hide();
+    }
+
+    // Function to remove a pending vaccination from the table
+    function removePendingVaccine(button) {
+      $(button).closest("tr").remove();
+      if ($("#pendingVaccinesTable tr").length === 0) {
+        $("#noPendingVaccinesMessage").show();
+      }
+    }
+
+    $(document).ready(function () {
+      $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").text(fileName);
+      });
+
+      $("#uploadButton").click(function () {
+        var fileInput = $("#uploadCertificate")[0];
+        var file = fileInput.files[0];
+        if (!file) {
+          alert("Please select a file to upload.");
+        } else {
+          var formData = new FormData();
+          formData.append("file", file);
+          $.ajax({
+            url: "upload.php", // Replace "upload.php" with the server-side script to handle file upload
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function() {
+              $("#uploadSuccessMessage").fadeIn().delay(1500).fadeOut();
+              $("#downloadButton").removeAttr("disabled");
+              addPendingVaccine(file.name, "2023-08-20", "Pending"); // Add uploaded file to pending vaccines table
+              $(".custom-file-label").text("Choose file"); // Reset file input label
+            },
+            error: function() {
+              alert("Error uploading file.");
+            }
+          });
+        }
+      });
+
+      // Adding multiple pending vaccinations dynamically
+      addPendingVaccine("COVID-19 Vaccine", "2023-07-30", "Pending");
+      addPendingVaccine("Flu Vaccine", "2023-08-10", "Pending");
+      addPendingVaccine("Tetanus Vaccine", "2023-08-15", "Pending");
+    });
+  </script>
+</body>
+</html>

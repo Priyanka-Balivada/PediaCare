@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Vaccinations</title>
+  <!-- Bootstrap CSS link -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Add custom styles for the your-vaccinations page if needed */
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    .container {
+      padding: 30px;
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #007bff;
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: bold;
+      font-size: 36px;
+    }
+
+    .card {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+      background-color: #007bff;
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .list-group-item {
+      font-size: 18px;
+    }
+
+    .form-group label {
+      font-size: 18px;
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    .form-control {
+      font-size: 18px;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    /* Additional custom styles to enhance the look and feel of the page */
+    .mt-3 {
+      margin-top: 20px;
+    }
+
+    .search-input {
+      margin-bottom: 10px;
+    }
+
+    .selected-vaccine {
+      background-color: #e0f2fe;
+    }
+
+    .success-message {
+      color: #28a745;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Children's Vaccination</a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="your-info.html">Your Info</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="your-vaccinations.html">Your Vaccinations</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pending-vaccines.html">Pending Vaccines</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content here -->
+  <div class="container mt-5">
+    <h1>Your Vaccinations</h1>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Government Mandated Vaccines</div>
+          <div class="card-body">
+            <div class="search-input">
+              <input type="text" class="form-control" id="governmentSearch" placeholder="Search Government Vaccines">
+            </div>
+            <ul class="list-group" id="government-vaccine-list">
+              <!-- List government mandated vaccines here -->
+              <li class="list-group-item">Vaccine 1</li>
+              <li class="list-group-item">Vaccine 2</li>
+              <!-- Add more items as needed -->
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Personally Taken Vaccines</div>
+          <div class="card-body">
+            <div class="search-input">
+              <input type="text" class="form-control" id="personalSearch" placeholder="Search Personal Vaccines">
+            </div>
+            <ul class="list-group" id="personal-vaccine-list">
+              <!-- List personally taken vaccines here -->
+              <li class="list-group-item">Vaccine A</li>
+              <li class="list-group-item">Vaccine B</li>
+              <!-- Add more items as needed -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group mt-3">
+      <div class="row">
+        <div class="col-md-8">
+          <input type="text" class="form-control" id="newVaccine" placeholder="Enter a new vaccine">
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-primary btn-block mt-2" id="addVaccineBtn">Add Vaccine</button>
+        </div>
+      </div>
+    </div>
+    <p class="success-message">Vaccine successfully added!</p>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer mt-4">
+    <div class="container text-center">
+      <p>&copy; 2023 Children's Vaccination Website. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    // Script for the Add and Remove Vaccine functionality
+    $(document).ready(function () {
+      $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").text(fileName);
+      });
+
+      $("#uploadButton").click(function () {
+        var fileInput = $("#uploadCertificate")[0];
+        var file = fileInput.files[0];
+        if (!file) {
+          alert("Please select a file to upload.");
+        } else {
+          var formData = new FormData();
+          formData.append("file", file);
+          $.ajax({
+            url: "upload.php", // Replace "upload.php" with the server-side script to handle file upload
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function() {
+              $("#uploadSuccessMessage").fadeIn().delay(1500).fadeOut();
+              $("#downloadButton").removeAttr("disabled");
+              addPendingVaccine(file.name, "2023-08-20", "Pending"); // Add uploaded file to pending vaccines table
+              $(".custom-file-label").text("Choose file"); // Reset file input label
+            },
+            error: function() {
+              alert("Error uploading file.");
+            }
+          });
+        }
+      });
+
+      // Function to add a pending vaccination to the table
+      function addPendingVaccine(name, date, status) {
+        var newRow = $("<tr>");
+        newRow.append($("<td>").text(name));
+        newRow.append($("<td>").text(date));
+        newRow.append($("<td>").text(status));
+        $("#pendingVaccinesTable").append(newRow);
+      }
+
+      // Adding multiple pending vaccinations dynamically
+      addPendingVaccine("COVID-19 Vaccine", "2023-07-30", "Pending");
+      addPendingVaccine("Flu Vaccine", "2023-08-10", "Pending");
+      addPendingVaccine("Tetanus Vaccine", "2023-08-15", "Pending");
+    });
+
+    // Additional Script for searching vaccines
+    $("#governmentSearch").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+      $("#government-vaccine-list li").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+      });
+    });
+
+    $("#personalSearch").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+      $("#personal-vaccine-list li").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+      });
+    });
+
+    // Additional Script for highlighting selected vaccine
+    $("#personal-vaccine-list").on("click", "li", function () {
+      $(this).toggleClass("selected-vaccine");
+    });
+
+    // Additional Script for adding a new vaccine
+    $("#addVaccineBtn").on("click", function () {
+      var newVaccine = $("#newVaccine").val().trim();
+      if (newVaccine !== "") {
+        var newVaccineItem = $("<li>").addClass("list-group-item").text(newVaccine);
+        $("#personal-vaccine-list").append(newVaccineItem);
+        $("#newVaccine").val(""); // Clear the input after adding the vaccine
+        $(".success-message").fadeIn().delay(1500).fadeOut();
+      }
+    });
+
+    // Additional Script for removing a personal vaccine
+    $("#personal-vaccine-list").on("contextmenu", "li", function (e) {
+      e.preventDefault();
+      $(this).remove();
+    });
+  </script>
+</body>
+</html>

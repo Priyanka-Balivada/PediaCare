@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Info</title>
+  <!-- Bootstrap CSS link -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Add custom styles for the your-info page if needed */
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    .container {
+      padding: 30px;
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #007bff;
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: bold;
+      font-size: 36px;
+    }
+
+    .form-group label {
+      font-size: 18px;
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    .form-control {
+      font-size: 18px;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-success {
+      background-color: #28a745;
+      border-color: #28a745;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .btn-success:hover {
+      background-color: #1a682c;
+    }
+
+    /* Additional custom styles to enhance the look and feel of the page */
+    .info-form {
+      margin-top: 30px;
+    }
+
+    .card {
+      border: none;
+      box-shadow: none;
+    }
+
+    .card-header {
+      background-color: transparent;
+      color: #007bff;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .list-group-item {
+      font-size: 18px;
+    }
+
+    .mt-3 {
+      margin-top: 20px;
+    }
+
+    .health-badge {
+      font-size: 18px;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
+      margin-left: 10px;
+    }
+
+    .health-good {
+      color: #28a745;
+      background-color: #d4edda;
+    }
+
+    .health-fair {
+      color: #007bff;
+      background-color: #cce5ff;
+    }
+
+    .health-critical {
+      color: #dc3545;
+      background-color: #f8d7da;
+    }
+  </style>
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Children's Vaccination</a>
+        <!-- ... Rest of the navigation bar ... --><nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="your-info.html">Your Info</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="your-vaccinations.html">Your Vaccinations</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pending-vaccines.html">Pending Vaccines</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+      </div>
+
+    </nav>
+  
+    <!-- Main content here -->
+  
+  
+  <div class="container mt-5">
+    <h1 class="mb-4">Your Info</h1>
+    <form class="info-form" id="infoForm">
+      <div class="form-row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" value="John Doe" disabled>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" class="form-control" id="age" value="10" disabled>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="bloodGroup">Blood Group:</label>
+            <input type="text" class="form-control" id="bloodGroup" value="A+" disabled>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="bloodPressure">Blood Pressure:</label>
+            <input type="text" class="form-control" id="bloodPressure" value="120/80 mmHg" disabled>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="weight">Weight:</label>
+            <input type="text" class="form-control" id="weight" value="70 kg" disabled>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="height">Height:</label>
+            <input type="text" class="form-control" id="height" value="175 cm" disabled>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary mt-3" id="editInfoBtn">Edit Information</button>
+      <button type="button" class="btn btn-success mt-3" id="saveInfoBtn" style="display: none;">Save Information</button>
+    </form>
+    <!-- End of Health Information Summary -->
+
+    <!-- Personal Notes -->
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">Personal Notes</div>
+          <div class="card-body">
+            <textarea class="form-control" rows="5" id="personalNotes" placeholder="Add your personal notes here"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of Personal Notes -->
+
+    <!-- Health Status Badge -->
+    <div class="row mt-3">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">Health Status</div>
+          <div class="card-body">
+            <p>Your overall health status is <span class="health-badge health-good">Good</span>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of Health Status Badge -->
+
+    <!-- List of Allergies -->
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Allergies</div>
+          <div class="card-body">
+            <ul class="list-group">
+              <li class="list-group-item">Pollen</li>
+              <li class="list-group-item">Dust</li>
+              <!-- Add more allergies as needed -->
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- End of List of Allergies -->
+
+      <!-- Health Records -->
+<div class="col-md-6">
+    <div class="card">
+      <div class="card-header">Health Records</div>
+      <div class="card-body">
+        <table class="table table-bordered" id="healthRecordsTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Doctor</th>
+              <th>Diagnosis</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2023-07-30</td>
+              <td>Dr. Smith</td>
+              <td>Common Cold</td>
+            </tr>
+            <!-- Add more health records as needed -->
+          </tbody>
+        </table>
+        <div class="form-group mt-3">
+          <label for="recordDate">Date:</label>
+          <input type="date" class="form-control" id="recordDate">
+        </div>
+        <div class="form-group">
+          <label for="doctorName">Doctor:</label>
+          <input type="text" class="form-control" id="doctorName" placeholder="Doctor's Name">
+        </div>
+        <div class="form-group">
+          <label for="diagnosis">Diagnosis:</label>
+          <input type="text" class="form-control" id="diagnosis" placeholder="Diagnosis">
+        </div>
+        <button class="btn btn-primary mt-2" id="addRecordBtn">Add Record</button>
+      </div>
+    </div>
+  </div>
+  <!-- End of Health Records -->
+    <!-- End of Additional features -->
+
+  </div>
+   <!-- Footer -->
+   <footer class="footer mt-4">
+    <div class="container text-center">
+      <p>&copy; 2023 Children's Vaccination Website. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  // Additional Script for adding new vaccines
+  $("#addVaccineBtn").click(function () {
+    var newVaccine = $("#newVaccine").val();
+    if (newVaccine.trim() !== "") {
+      var listItem = $("<li>", { class: "list-group-item", text: newVaccine });
+      $("#personal-vaccine-list").append(listItem);
+      $("#newVaccine").val("");
+    }
+  });
+
+  $("#personal-vaccine-list").on("click", ".list-group-item", function () {
+    $(this).remove();
+  });
+
+  // Additional Script for editing user information
+  $("#editInfoBtn").click(function () {
+    $("input").prop("disabled", false);
+    $("#editInfoBtn").hide();
+    $("#saveInfoBtn").show();
+  });
+
+  $("#saveInfoBtn").click(function () {
+    $("input").prop("disabled", true);
+    $("#saveInfoBtn").hide();
+    $("#editInfoBtn").show();
+  });
+
+  // Additional Script for adding health records
+  $("#addRecordBtn").click(function () {
+    var recordDate = $("#recordDate").val();
+    var doctorName = $("#doctorName").val();
+    var diagnosis = $("#diagnosis").val();
+    if (recordDate.trim() !== "" && doctorName.trim() !== "" && diagnosis.trim() !== "") {
+      var newRow = $("<tr>");
+      newRow.append($("<td>").text(recordDate));
+      newRow.append($("<td>").text(doctorName));
+      newRow.append($("<td>").text(diagnosis));
+      $("#healthRecordsTable").append(newRow);
+      $("#recordDate").val("");
+      $("#doctorName").val("");
+      $("#diagnosis").val("");
+    }
+  });
+    // Additional Script for adding new vaccines
+    $("#addVaccineBtn").click(function () {
+      var newVaccine = $("#newVaccine").val();
+      if (newVaccine.trim() !== "") {
+        var listItem = $("<li>", { class: "list-group-item", text: newVaccine });
+        $("#personal-vaccine-list").append(listItem);
+        $("#newVaccine").val("");
+      }
+    });
+
+    $("#personal-vaccine-list").on("click", ".list-group-item", function () {
+      $(this).remove();
+    });
+
+    // Additional Script for editing user information
+    $("#editInfoBtn").click(function () {
+      $("input").prop("disabled", false);
+      $("#editInfoBtn").hide();
+      $("#saveInfoBtn").show();
+    });
+
+    $("#saveInfoBtn").click(function () {
+      $("input").prop("disabled", true);
+      $("#saveInfoBtn").hide();
+      $("#editInfoBtn").show();
+    });
+  </script>
+</body>
+</html>
